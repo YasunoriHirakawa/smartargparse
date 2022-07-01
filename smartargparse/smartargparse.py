@@ -30,7 +30,7 @@ def parse_args(config: Type[T]) -> T:
         if is_required:
             parser.add_argument(
                 argument, type=value_type, required=is_required,
-                help=f"type: {value_type.__name__}")
+                help=f"type: {value_type.__name__}, required")
         else:
             parser.add_argument(
                 argument, type=value_type, default=value.default,
