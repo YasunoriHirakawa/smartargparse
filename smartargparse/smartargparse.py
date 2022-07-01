@@ -13,28 +13,30 @@ T = TypeVar("T", bound=BaseConfig)
 
 def parse_args(config: Type[T]) -> T:
 
+    if not dataclasses.is_dataclass(config):
+        raise TypeError("Argument must be dataclass")
+
     parser = ArgumentParser()
 
-    for key, value in vars(config)["__dataclass_fields__"].items():
-        argument = "--" + key.replace("_", "-")
-        value_type = value.type
+    for field in dataclasses.fields(config):
+        argument = "--" + field.name.replace("_", "-")
+        field.type = field.type
         is_required = (
-            type(value.default) is dataclasses._MISSING_TYPE
-            or value.default is None)
-        if value_type is bool:
-            if value.default is True:
+            field.default is dataclasses.MISSING or field.default is None)
+        if field.type is bool:
+            if field.default is True:
                 parser.add_argument(argument, action="store_false")
             else:
                 parser.add_argument(argument, action="store_true")
             continue
         if is_required:
             parser.add_argument(
-                argument, type=value_type, required=is_required,
-                help=f"type: {value_type.__name__}, required")
+                argument, type=field.type, required=is_required,
+                help=f"type: {field.type.__name__}, required")
         else:
             parser.add_argument(
-                argument, type=value_type, default=value.default,
-                help=f"type: {value_type.__name__}, default: {value.default}")
+                argument, type=field.type, default=field.default,
+                help=f"type: {field.type.__name__}, default: {field.default}")
 
     args = vars(parser.parse_args())
     args = {key: value for key, value in args.items() if value is not None}
