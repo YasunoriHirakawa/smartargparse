@@ -8,4 +8,5 @@ setup(
     author="Yasunori Hirakawa",
     url="https://github.com/YasunoriHirakawa/smartargparse.git",
     package=find_packages(),
+    install_requires=[]
 )
