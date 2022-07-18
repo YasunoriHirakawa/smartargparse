@@ -3,7 +3,7 @@ Convenience wrapper of python for configuring ArgumentParser using a class.
 
 ## Install
 ```sh
-pip install "git+https://github.com/YasunoriHirakawa/smartargparse.git#egg=smartargparse"
+pip3 install https://github.com/YasunoriHirakawa/smartargparse/archive/main.zip
 ```
 
 ## Usage
