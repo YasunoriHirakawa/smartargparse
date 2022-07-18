@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="smartargparse",
@@ -7,6 +7,6 @@ setup(
     description="Convenience wrapper for configuring ArgumentParser using a class.",
     author="Yasunori Hirakawa",
     url="https://github.com/YasunoriHirakawa/smartargparse.git#egg=smartargparse",
-    package=find_packages(),
+    packages=["smartargparse"],
     install_requires=[]
 )
